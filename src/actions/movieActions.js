@@ -16,6 +16,8 @@ function movieFetched(movie) {
 }
 
 function movieSet(movie) {
+    console.log("MOVIE%#$%*(%")
+    console.log(movie)
     return {
         type: actionTypes.SET_MOVIE,
         selectedMovie: movie
@@ -70,7 +72,7 @@ export function fetchMovie(movieId){
                 return response.json();
             })
             .then( (res) => {
-                dispatch(movieFetched(res));
+                dispatch(movieFetched(res[0]));
             })
             .catch( (e) => console.log(e) );
     }

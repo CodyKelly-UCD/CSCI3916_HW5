@@ -34,18 +34,19 @@ class MovieList extends Component {
                 return <div>Loading...</div>;
             }
 
+
             return (
                 <Carousel onSelect={this.handleSelect}>
                     {movieList.map((movie) =>
                         <Carousel.Item key={movie._id}>
                             <div>
                                 <LinkContainer to={'/movie/'+movie._id} onClick={()=>this.handleClick(movie)}>
-                                    <Image className="image" src={movie.imageUrl} thumbnail />
+                                    <Image className="image" height={500} src= {movie.image_url ? movie.image_url : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Question_mark.svg/220px-Question_mark.svg.png"} thumbnail />
                                 </LinkContainer>
                             </div>
                             <Carousel.Caption>
                                 <h3>{movie.title}</h3>
-                                <Glyphicon glyph={'star'} /> {movie.avgRating} &nbsp;&nbsp; {movie.releaseDate}
+                                <Glyphicon glyph={'star'} />  &nbsp;&nbsp; {movie.year_released}
                             </Carousel.Caption>
                         </Carousel.Item>)}
                 </Carousel>)
