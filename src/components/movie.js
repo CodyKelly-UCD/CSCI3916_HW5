@@ -11,32 +11,6 @@ import { AiFillStar } from "react-icons/ai";
 class Movie extends Component {
   constructor(props) {
     super(props);
-    this.updateDetails = this.updateDetails.bind(this);
-    this.makeReview = this.makeReview.bind(this);
-
-    this.state = {
-      details: {
-        rating: 0,
-        body: "",
-      },
-    };
-  }
-
-  updateDetails(event) {
-    let updateDetails = Object.assign({}, this.state.details);
-
-    updateDetails[event.target.id] = event.target.value;
-    this.setState({
-      details: updateDetails,
-    });
-  }
-
-  makeReview() {
-    const { dispatch } = this.props;
-    let reviewData = this.state.details;
-    reviewData.movie_id = this.props.movieId;
-    reviewData.user = localStorage.getItem("username");
-    dispatch(submitReview(reviewData));
   }
 
   componentDidMount() {
@@ -55,58 +29,21 @@ class Movie extends Component {
       ));
     };
 
-    const ReviewInfo = ({ reviews }) => {
-      return reviews.map((review, i) => (
-        <p key={i}>
-          <b>{review.user}</b> {review.review}
-          <AiFillStar /> {review.rating}
-        </p>
-      ));
-    };
-
-    const ReviewStuff = () => {
-      return (
-        <Form horizontal>
-          <Form.Group controlId="body">
-            <Form.Label>Review</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows="5"
-              onChange={this.updateDetails}
-              value={this.state.details.body}
-              placeholder="Share your thoughts on this movie..."
-            />
-          </Form.Group>
-
-          <Form.Group controlId="rating">
-            <Form.Label>Rating</Form.Label>
-            <Form.Control
-              as="select"
-              onChange={this.updateDetails}
-              value={this.state.details.rating}
-            >
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </Form.Control>
-          </Form.Group>
-
-          <Form.Group>
-            <Col smOffset={2} sm={10}>
-              <Button onClick={this.makeReview}>Submit</Button>
-            </Col>
-          </Form.Group>
-        </Form>
-      );
-    };
-
     const DetailInfo = ({ currentMovie }) => {
       if (!currentMovie) {
         //if not could still be fetching the movie
         return <div>Loading...</div>;
       }
+
+      const ReviewInfo = ({ reviews }) => {
+        return reviews.map((review, i) => (
+          <p key={i}>
+            <b>{review.user}</b>
+            <AiFillStar /> {review.rating}
+            <body>"{review.body}"</body>
+          </p>
+        ));
+      };
 
       return (
         <Card>
@@ -131,8 +68,7 @@ class Movie extends Component {
     const MoviePage = () => {
       return (
         <div>
-          <DetailInfo currentMovie={this.props.selectedMovie} />;
-          <ReviewStuff />
+          <DetailInfo currentMovie={this.props.selectedMovie} />
         </div>
       );
     };

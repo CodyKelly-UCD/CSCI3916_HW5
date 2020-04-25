@@ -21,7 +21,7 @@ export function submitReview(data) {
         return response.json();
       })
       .then((res) => {
-        dispatch(fetchMovie(data.movie));
+        dispatch(fetchMovie(data.movie_id));
       })
       .catch((e) => console.log(e));
   };
